@@ -2,11 +2,19 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+html,
+body,
+:root {
+  @apply h-full;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-light-blue: var(--color-light-purple);
-  --color-dark-blue: var(--color-dark-purple);
+  --color-light-purple: var(--color-light-purple);
+  --color-dark-purple: var(--color-dark-purple);
+  --color-light-lilac: var(--color-light-lilac);
+  --color-dark-lilac: var(--color-dark-lilac);
   --color-red: var(--color-red);
   --color-light-yellow: var(--color-light-yellow);
   --color-dark-yellow: var(--color-dark-yellow);
@@ -54,9 +62,41 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  @keyframes marquee {
+  from {
+    transform: translateX(0);
+    }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+  @keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+    }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
 }
 
 :root {
+  --color-light-purple: #6128e8;
+  --color-dark-purple: #2c088b;
+
+  --color-dark-lilac: #8272f4;
+  --color-light-lilac: #d7d0fc;
+
+  --color-red: #e97873;
+  --color-light-yellow: #fdecb5;
+  --color-dark-yellow: #fcd041;
+
+  --color-cream: #ebe4e8;
+
+  --color-text: #28262e;
+  --color-muted: #787284;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
