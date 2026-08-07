@@ -1,3 +1,5 @@
+import { ClerkProvider } from "@clerk/nextjs";
+
 import { Header } from "./Header";
 
 type Props = {
@@ -6,8 +8,12 @@ type Props = {
 const LandingPage = ({ children }: Props) => {
   return (
     <div className="min-h-screen flex flex-col">
+      <ClerkProvider>
         <Header />
-        <main>{children}</main>
+        <main className="flex-1 flex flex-col items-center justify-center">
+          {children}
+        </main>
+      </ClerkProvider>
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 
 export const Header = () => {
@@ -14,6 +15,19 @@ export const Header = () => {
           <Link href="/" className="hover:underline decoration-wavy">
             how it works
           </Link>
+          <div className="flex items-center gap-3">
+            <Show when="signed-out">
+              <SignUpButton>
+                <button className="rounded-full bg-[#d6d0ff] px-4 py-2 text-sm font-medium hover:opacity-90">
+                  get started
+                </button>
+              </SignUpButton>
+            </Show>
+
+            <Show when="signed-in">
+              <UserButton />
+            </Show>
+          </div>
         </nav>
       </div>
     </header>
