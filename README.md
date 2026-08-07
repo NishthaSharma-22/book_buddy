@@ -1,3 +1,38 @@
+# to-dos:
+
+1. smart book matching
+
+* user enters the book they need
+* ai finds relevant and nearby listings
+* users can also upload a photo to identify a book
+
+2. donate / swap / sell / lend
+
+* users can choose how they want to offer their book
+* donate it for free
+* swap it with another book
+* sell it at a low price
+* lend it temporarily
+
+3. ai book scanner
+
+* upload a photo of a book
+* ai extracts the title, author, edition, subject, grade, isbn, and condition
+* automatically helps create the listing
+
+4. school / college communities
+
+* schools and colleges can have their own book buddy community
+* students can find and exchange books within their community
+* show basic stats like books available, participants, and books reused
+
+
+# small to-dos:
+- add an about page for the story
+
+
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
