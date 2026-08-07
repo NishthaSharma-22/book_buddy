@@ -29,7 +29,7 @@ export const Header = () => {
               browse
             </Link>
             <Link href="/" className="hover:underline decoration-wavy">
-              your books
+              my books
             </Link>
             <Link href="/" className="hover:underline decoration-wavy">
               requests
