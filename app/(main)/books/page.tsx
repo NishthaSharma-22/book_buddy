@@ -1,5 +1,4 @@
-import BookBar from '@/components/browse/BookBar'
-import React from 'react'
+import BookBar from '@/components/books/BookBar'
 
 const Books = () => {
   return (

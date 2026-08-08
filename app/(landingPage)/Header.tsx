@@ -37,6 +37,9 @@ export const Header = () => {
             <Link href="/" className="hover:underline decoration-wavy">
               messages
             </Link>
+            <Link href="/books/add" className="bg-light-lilac rounded-xl p-2 hover:bg-light-yellow decoration-wavy">
+              add a book!
+            </Link>
 
             <UserButton />
           </Show>
