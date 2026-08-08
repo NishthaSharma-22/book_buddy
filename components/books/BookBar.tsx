@@ -52,24 +52,24 @@ const BookBar = () => {
       </div>
 
       {/* Exchange type tabs */}
-      <div className="mt-6 flex justify-between gap-6 border-b border-gray-200">
-        <button className="border-b-2 border-black px-1 pb-3 text-sm font-medium">
+      <div className="mt-6 flex justify-center gap-6 border-b border-gray-200">
+        <button className="border-b-2 border-black px-1 pb-3 text-sm font-medium hover:cursor-pointer">
           all books
         </button>
 
-        <button className="px-1 pb-3 text-sm text-gray-500 hover:text-black">
+        <button className="px-1 pb-3 text-sm text-gray-500 hover:text-black hover:cursor-pointer">
           donate
         </button>
 
-        <button className="px-1 pb-3 text-sm text-gray-500 hover:text-black">
+        <button className="px-1 pb-3 text-sm text-gray-500 hover:text-black hover:cursor-pointer">
           swap
         </button>
 
-        <button className="px-1 pb-3 text-sm text-gray-500 hover:text-black">
+        <button className="px-1 pb-3 text-sm text-gray-500 hover:text-black hover:cursor-pointer">
           sell
         </button>
 
-        <button className="px-1 pb-3 text-sm text-gray-500 hover:text-black">
+        <button className="px-1 pb-3 text-sm text-gray-500 hover:text-black hover:cursor-pointer">
           lend
         </button>
       </div>
