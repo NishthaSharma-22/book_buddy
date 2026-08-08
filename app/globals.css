@@ -175,4 +175,10 @@ body,
   html {
     @apply font-mono;
   }
+    button {
+    @apply cursor-pointer;
+  }
+
 }
+
+

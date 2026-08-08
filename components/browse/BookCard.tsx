@@ -1,4 +1,4 @@
-import { capitalize } from "@/lib/utils";
+import { capitalize, getPastelColor } from "@/lib/utils";
 
 type Book = {
   _id: string;
@@ -19,17 +19,22 @@ type BookCardProps = {
 
 export function BookCard({ book }: BookCardProps) {
   return (
-    <div className="overflow-hidden border border-gray-200 bg-white transition hover:-translate-y-1 hover:cursor-pointer">
-      {/* Book image */}
+    <div className="overflow-hidden border-dashed border-black border-2 bg-white transition hover:-translate-y-1 hover:cursor-pointer">
       <div className="flex h-56 items-center justify-center bg-gray-100">
         {book.imageUrl ? (
           <img
             src={book.imageUrl}
             alt={book.title}
-            className="h-full w-full object-cover"
+            className="h-56 w-full object-cover"
           />
         ) : (
-          <span className="text-5xl">📚</span>
+          <div
+            className={`flex h-56 w-full items-center justify-center ${getPastelColor(
+              book._id,
+            )}`}
+          >
+            <span className="text-5xl">📚</span>
+          </div>
         )}
       </div>
 

@@ -59,6 +59,15 @@ const BookSchema = new Schema(
       type: String,
       required: true,
     },
+    status: {
+        type: String,
+        enum: ["available", "given-away", "sold", "lent", "archived"],
+        default: "available",
+    },
+    givenTo: {
+        type: String,
+        default: "",
+    },
 
     institutionId: {
       type: String,

@@ -10,6 +10,7 @@ type BookDetailsFormProps = {
     edition: string;
     condition: string;
     description: string; 
+    imageUrl: string;
   };
 
   updateField: (field: string, value: string) => void;
