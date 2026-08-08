@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 import { BookDetailsForm } from "./BookDetailsForm";
 import { ExchangeTypeSelector } from "./ExchangeTypeSelector";
 
@@ -18,6 +20,8 @@ export function AddBookForm() {
     institutionId: "",
     imageUrl: "",
   });
+  const router = useRouter();
+  const [published, setPublished] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -51,6 +55,7 @@ export function AddBookForm() {
       }
 
       setMessage("Book published successfully!");
+      setPublished(true);
 
       setFormData({
         title: "",
@@ -94,14 +99,24 @@ export function AddBookForm() {
       {message && (
         <p className="mt-4 rounded-lg bg-gray-100 p-4 text-sm">{message}</p>
       )}
-
-      <button
+    {!published? (<button
         type="submit"
         disabled={loading}
         className="mt-6 w-full rounded-xl hover:cursor-pointer bg-black px-6 py-4 font-medium text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {loading ? "Publishing..." : "Publish Book"}
       </button>
+    ):(
+      <div className="mt-6 flex gap-2">
+        <button type="button" onClick={()=>{setPublished(false); setMessage("")}} className="w-full rounded-xl bg-black px-6 py-4 font-medium text-white transition hover:cursor-pointer">
+          Add another book
+        </button>
+        <button type="button" onClick={()=>router.push("/books")} className="w-full rounded-xl border border-dashed bg-light-lilac font-medium transition hover:cursor-pointer">
+          Check out your published book
+        </button>
+      </div>
+    )}
+      
     </form>
   );
 }
