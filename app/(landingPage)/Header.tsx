@@ -28,7 +28,7 @@ export const Header = () => {
             <Link href="/books" className="hover:underline decoration-wavy">
               browse
             </Link>
-            <Link href="/" className="hover:underline decoration-wavy">
+            <Link href="/my-books" className="hover:underline decoration-wavy">
               my books
             </Link>
             <Link href="/" className="hover:underline decoration-wavy">
