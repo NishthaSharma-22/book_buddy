@@ -25,7 +25,7 @@ export const Header = () => {
             </div>
           </Show>
           <Show when="signed-in">
-            <Link href="/" className="hover:underline decoration-wavy">
+            <Link href="/books" className="hover:underline decoration-wavy">
               browse
             </Link>
             <Link href="/" className="hover:underline decoration-wavy">
