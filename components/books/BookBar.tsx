@@ -1,18 +1,39 @@
+"use client";
+
+import { useState } from "react";
+
 import { BiSearch } from "react-icons/bi";
 import { FaLandmark } from "react-icons/fa";
 
-const BookBar = () => {
+type BookBarProps = {
+  onSearch: (query: string) => void;
+}
+
+const BookBar = ({onSearch}: BookBarProps) => {
+  const [search, setSearch] = useState("");
+  const handleSearch = () => {
+    onSearch(search);
+  }
+
   return (
     <div className="w-full">
       {/* Search */}
       <div className="relative">
         <input
           type="text"
+          value={search}
+          onChange={(e)=>{
+            setSearch(e.target.value);
+            onSearch(e.target.value);
+
+          }
+          }
           placeholder="search by title, subject, author, ISBN..."
           className="w-full rounded-xl border border-gray-20 px-5 py-3.5 pr-12 text-sm outline-none transition focus:border-gray-400"
         />
 
         <button
+        onClick={handleSearch}
           className="absolute right-3 top-1/2 -translate-y-1/2 p-2 hover:cursor-pointer"
           aria-label="Search"
         >
@@ -23,28 +44,28 @@ const BookBar = () => {
       {/* Filters */}
       <div className="mt-4 flex flex-wrap items-center gap-3">
         <button className="rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm hover:bg-gray-50">
-          <div className="flex items-center justofy-center gap-3">
+          <div className="flex items-center justify-center gap-3">
             <FaLandmark />
             <p>my community</p>
           </div>
         </button>
 
         <button className="rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm hover:bg-gray-50">
-          <div className="flex items-center justofy-center gap-3">
+          <div className="flex items-center justify-center gap-3">
             <FaLandmark />
             <p>near me</p>
           </div>
         </button>
 
         <button className="rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm hover:bg-gray-50">
-          <div className="flex items-center justofy-center gap-3">
+          <div className="flex items-center justify-center gap-3">
             <FaLandmark />
             <p>subject</p>
           </div>
         </button>
 
         <button className="rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm hover:bg-gray-50">
-          <div className="flex items-center justofy-center gap-3">
+          <div className="flex items-center justify-center gap-3">
             <FaLandmark />
             <p>class</p>
           </div>

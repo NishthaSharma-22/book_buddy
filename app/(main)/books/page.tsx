@@ -4,7 +4,6 @@ import BrowsePage from '@/components/browse/BrowsePage'
 const Books = () => {
   return (
     <section className='mt-10'>
-        <BookBar />
         <BrowsePage />
     </section>
   )

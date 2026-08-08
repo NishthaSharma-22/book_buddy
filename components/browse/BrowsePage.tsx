@@ -1,6 +1,6 @@
 import { connectDB } from "@/lib/mongodb";
 import { Book } from "@/lib/models/Book";
-import { BookCard } from "./BookCard";
+import { BrowseBooks } from "./BrowseBooks";
 
 async function getBooks() {
   await connectDB();
@@ -22,18 +22,7 @@ export default async function BrowsePage() {
           Find books from students in your community.
         </p>
       </div>
-
-      {books.length === 0 ? (
-        <div className="mt-10 rounded-2xl border border-dashed border-gray-300 p-12 text-center">
-          <p className="text-gray-500">No books have been listed yet.</p>
-        </div>
-      ) : (
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {books.map((book: any) => (
-            <BookCard key={book._id} book={book} />
-          ))}
-        </div>
-      )}
+      <BrowseBooks books={books} />
     </main>
   );
 }
