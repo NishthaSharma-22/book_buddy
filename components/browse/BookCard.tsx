@@ -1,4 +1,5 @@
 import { capitalize, getPastelColor } from "@/lib/utils";
+import Link from "next/link";
 
 type Book = {
   _id: string;
@@ -19,7 +20,7 @@ type BookCardProps = {
 
 export function BookCard({ book }: BookCardProps) {
   return (
-    <div className="overflow-hidden border-dashed border-black border-2 bg-white transition hover:-translate-y-1 hover:cursor-pointer">
+    <Link href={`/books/${book._id}`} className="overflow-hidden border-dashed border-black border-2 bg-white transition hover:-translate-y-1 hover:cursor-pointer">
       <div className="flex h-56 items-center justify-center bg-gray-100">
         {book.imageUrl ? (
           <img
@@ -72,6 +73,6 @@ export function BookCard({ book }: BookCardProps) {
           <p className="mt-3 text-xs text-gray-500">Edition: {book.edition}</p>
         )}
       </div>
-    </div>
+    </Link>
   );
 }
