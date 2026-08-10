@@ -25,10 +25,9 @@ export async function GET() {
 
     const conversationsWithUsers = await Promise.all(
       conversations.map(async (conversation) => {
-        const otherUserId = conversation.participants.find(
-          (id) => id !== userId,
-        );
-
+const otherUserId = conversation.participants.find(
+  (id: string) => id !== userId,
+);
         let otherUser = null;
 
         if (otherUserId) {
