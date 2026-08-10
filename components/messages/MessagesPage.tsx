@@ -20,7 +20,7 @@ export default function MessagesPage({
           conversationId ? "hidden md:block" : "block"
         }`}
       >
-        <ConversationList />
+        <ConversationList currentUserId={currentUserId} />
       </div>
 
       {/* Chat */}
