@@ -1,8 +1,11 @@
+
 "use client";
 
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { useUser } from "@clerk/nextjs";
+import Link from "next/link";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 type Message = {
   _id?: string;
@@ -17,14 +20,25 @@ type ChatWindowProps = {
   currentUserId: string;
 };
 
+type Conversation = {
+  _id: string;
+  bookId?: {
+    _id: string;
+    title: string;
+  };
+};
+
 export default function ChatWindow({
   conversationId,
   currentUserId,
 }: ChatWindowProps) {
   const { user } = useUser();
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(true);
+  const [conversation, setConversation] =
+    useState<Conversation | null>(null);
 
   const socketRef = useRef<Socket | null>(null);
 
@@ -32,6 +46,29 @@ export default function ChatWindow({
     const socket = io();
 
     socketRef.current = socket;
+
+    const loadConversation = async () => {
+      try {
+        const response = await fetch(
+          `/api/conversations/${conversationId}`,
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            data.error || "Failed to load conversation",
+          );
+        }
+
+        setConversation(data);
+      } catch (error) {
+        console.error(
+          "Failed to load conversation:",
+          error,
+        );
+      }
+    };
 
     // Load existing messages from MongoDB
     const loadMessages = async () => {
@@ -52,36 +89,46 @@ export default function ChatWindow({
 
         setMessages(data);
       } catch (error) {
-        console.error("Failed to load messages:", error);
+        console.error(
+          "Failed to load messages:",
+          error,
+        );
       } finally {
         setLoading(false);
       }
     };
 
+    loadConversation();
     loadMessages();
 
-    // Join the conversation
-    socket.emit("join-conversation", conversationId);
+    socket.emit(
+      "join-conversation",
+      conversationId,
+    );
+
     if (user?.id) {
       socket.emit("join-user", user.id);
     }
 
-    // Listen for real-time messages
-    socket.on("new-message", (message: Message) => {
-      setMessages((prev) => {
-        // Prevent duplicate messages
-        if (
-          message._id &&
-          prev.some((existing) => existing._id === message._id)
-        ) {
-          return prev;
-        }
+    socket.on(
+      "new-message",
+      (message: Message) => {
+        setMessages((prev) => {
+          if (
+            message._id &&
+            prev.some(
+              (existing) =>
+                existing._id === message._id,
+            )
+          ) {
+            return prev;
+          }
 
-        return [...prev, message];
-      });
-    });
+          return [...prev, message];
+        });
+      },
+    );
 
-    // Cleanup
     return () => {
       socket.disconnect();
       socketRef.current = null;
@@ -109,45 +156,53 @@ export default function ChatWindow({
   };
 
   return (
-    <div className="flex h-[75vh] min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border-2 border-black bg-white">
+    <div className="flex min-h-[600px] h-full flex-col bg-white rounded-xl border-2 border-black">
       {/* Header */}
-      <div className="border-b-2 border-black px-5 py-4">
-        <h1 className="font-semibold text-gray-900">
-          Book Request
-        </h1>
+      <div className="shrink-0 border-b border-gray-200 p-5">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <h1 className="text-xl font-semibold">
+              {conversation?.bookId?.title || "Book Request"}
+            </h1>
 
-        <p className="mt-1 text-sm text-gray-500">
-          Chat with the book owner
-        </p>
+            <p className="mt-1 text-sm text-gray-500">
+              Chat with the book owner
+            </p>
+          </div>
+
+          {conversation?.bookId?._id && (
+            <Link
+              href={`/books/${conversation.bookId._id}`}
+              className="shrink-0 rounded-lg border bg-light-yellow px-3 py-2 text-sm font-medium transition hover:bg-gray-50 border-dashed border-2 border-black"
+            >
+              <div className="flex gap-2">
+                <p>View Book</p>
+                <FaExternalLinkAlt size={20} />
+              </div>
+            </Link>
+          )}
+        </div>
       </div>
-
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-5 min-h-0">
+      <div className="min-h-0 flex-1 overflow-y-auto p-5">
         {loading ? (
           <div className="flex h-full items-center justify-center">
-            <p className="text-sm text-gray-500">
-              Loading messages...
-            </p>
+            <p className="text-sm text-gray-500">Loading messages...</p>
           </div>
         ) : messages.length === 0 ? (
           <div className="flex h-full items-center justify-center">
-            <p className="text-sm text-gray-500">
-              No messages yet.
-            </p>
+            <p className="text-sm text-gray-500">No messages yet.</p>
           </div>
         ) : (
           <div className="space-y-3">
             {messages.map((message, index) => {
-              const isOwnMessage =
-                message.senderId === currentUserId;
+              const isOwnMessage = message.senderId === currentUserId;
 
               return (
                 <div
                   key={message._id ?? index}
                   className={`flex ${
-                    isOwnMessage
-                      ? "justify-end"
-                      : "justify-start"
+                    isOwnMessage ? "justify-end" : "justify-start"
                   }`}
                 >
                   <div
@@ -157,21 +212,15 @@ export default function ChatWindow({
                         : "bg-gray-100 text-gray-900"
                     }`}
                   >
-                    <p className="text-sm leading-relaxed">
-                      {message.text}
-                    </p>
+                    <p className="text-sm leading-relaxed">{message.text}</p>
 
                     {message.createdAt && (
                       <p
                         className={`mt-1 text-[10px] ${
-                          isOwnMessage
-                            ? "text-gray-300"
-                            : "text-gray-400"
+                          isOwnMessage ? "text-gray-300" : "text-gray-400"
                         }`}
                       >
-                        {new Date(
-                          message.createdAt,
-                        ).toLocaleTimeString([], {
+                        {new Date(message.createdAt).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
@@ -184,7 +233,6 @@ export default function ChatWindow({
           </div>
         )}
       </div>
-
       {/* Message input */}
       <div className="shrink-0 border-t border-gray-200 p-4">
         <div className="flex gap-3">
