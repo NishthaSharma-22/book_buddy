@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import BackToBrowse from "@/components/browse/BackToBrowse";
 import RequestBookButton from "@/components/books/RequestBookButton";
 import BookStatusControl from "@/components/books/BookStatusControl";
+import BookOwnerControls from "@/components/edit/BookOwnerControls";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -102,10 +103,14 @@ export default async function IndividualBookPage({
 
           {/* Owner controls */}
           {userId === book.ownerId && (
-            <BookStatusControl
-              bookId={book._id.toString()}
-              currentStatus={book.status}
-            />
+            <>
+              <BookStatusControl
+                bookId={book._id.toString()}
+                currentStatus={book.status}
+              />
+
+              <BookOwnerControls bookId={book._id.toString()} />
+            </>
           )}
 
           {/* Request button */}

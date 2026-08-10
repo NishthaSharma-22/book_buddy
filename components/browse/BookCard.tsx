@@ -79,10 +79,14 @@ export function BookCard({ book }: BookCardProps) {
         <div className="flex items-start justify-between gap-3">
           <div>
             <h2 className="font-semibold text-gray-900">{book.title}</h2>
-
-            {book.author && (
-              <p className="mt-1 text-sm text-gray-500">{book.author}</p>
-            )}
+            <div
+              className="flex gap-3 items-center text-sm"
+            >
+              {book.author && <p className="text-gray-700">{book.author}</p>}
+              {book.edition && (
+                <p className="text-gray-400">Edition: {book.edition}</p>
+              )}
+            </div>
           </div>
 
           <span
@@ -118,12 +122,6 @@ export function BookCard({ book }: BookCardProps) {
             {capitalize(book.condition)}
           </span>
         </div>
-
-        {book.edition && (
-          <p className="mt-3 text-xs text-gray-500">
-            Edition: {book.edition}
-          </p>
-        )}
       </div>
     </Link>
   );
