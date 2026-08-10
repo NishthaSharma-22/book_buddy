@@ -34,7 +34,7 @@ export default function RequestBookButton({ bookId }: RequestBookButtonProps) {
       router.push(`/books/messages/${data.conversationId}`);
     } catch (error) {
       console.error(error);
-      alert("Something went wrong. Please try again.");
+      alert("You cannot request your own book!");
     } finally {
       setLoading(false);
     }
