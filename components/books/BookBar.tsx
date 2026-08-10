@@ -6,10 +6,10 @@ import { FaLandmark } from "react-icons/fa";
 
 type BookBarProps = {
   onSearch: (query: string) => void;
-  onCommunityChange: (community: string) => void;
-  onSubjectChange: (subject: string) => void;
-  onGradeChange: (grade: string) => void;
-  onExchangeTypeChange: (exchangeType: string) => void;
+  onCommunityChange?: (community: string) => void;
+  onSubjectChange?: (subject: string) => void;
+  onGradeChange?: (grade: string) => void;
+  onExchangeTypeChange?: (exchangeType: string) => void;
 };
 
 const BookBar = ({

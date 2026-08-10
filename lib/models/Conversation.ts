@@ -32,6 +32,11 @@ const ConversationSchema = new Schema(
       type: [String],
       default: [],
     },
+    requestStatus: {
+      type: String,
+      enum: ["pending", "acepted", "rejected"],
+      default: "pending",
+    }
   },
   {
     timestamps: true,

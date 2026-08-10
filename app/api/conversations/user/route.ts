@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { Conversation } from "@/lib/models/Conversation";
 
-
 export async function GET() {
   try {
     const { userId } = await auth();
@@ -17,6 +16,7 @@ export async function GET() {
     const conversations = await Conversation.find({
       participants: userId,
     })
+      .populate("bookId")
       .sort({ updatedAt: -1 })
       .lean();
 
