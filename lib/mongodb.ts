@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI: string = process.env.MONGODB_URI || "";
 
 if (!MONGODB_URI) {
-  throw new Error("Please add MONGODB_URI to your environment variables");
+  throw new Error("Please add MONGODB_URI to your .env.local file");
 }
 
 type MongooseCache = {
