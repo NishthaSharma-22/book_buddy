@@ -6,11 +6,18 @@ import { useRouter, useParams } from "next/navigation";
 type Conversation = {
   _id: string;
   participants: string[];
-  bookId: string;
+  bookId: {
+    _id: string;
+    title: string;
+  };
   lastMessage?: string;
   lastMessageSenderId?: string;
   lastMessageAt?: string;
   readBy: string[];
+  otherUser?: {
+    id: string;
+    name: string;
+  };
 };
 
 type ConversationListProps = {
@@ -87,19 +94,21 @@ export default function ConversationList({
                   </div>
 
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between gap-2">
-                      <p className="truncate text-sm font-semibold text-gray-900">
-                        {otherUserId || "User"}
-                      </p>
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex flex-col">
+                        <p className="truncate text-sm font-semibold text-gray-900">
+                          {conversation.bookId?.title || "Book conversation"}
+                        </p>
+
+                        <p className="mt-1 truncate text-sm text-gray-600">
+                          {conversation.otherUser?.name || "User"}
+                        </p>
+                      </div>
 
                       {isUnread && (
                         <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-black" />
                       )}
                     </div>
-
-                    <p className="mt-1 truncate text-sm text-gray-500">
-                      {conversation.lastMessage || "Start a conversation"}
-                    </p>
                   </div>
                 </div>
               </button>

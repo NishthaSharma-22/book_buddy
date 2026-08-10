@@ -1,5 +1,6 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+
 import { connectDB } from "@/lib/mongodb";
 import { Conversation } from "@/lib/models/Conversation";
 
@@ -20,7 +21,42 @@ export async function GET() {
       .sort({ updatedAt: -1 })
       .lean();
 
-    return NextResponse.json(conversations);
+    const client = await clerkClient();
+
+    const conversationsWithUsers = await Promise.all(
+      conversations.map(async (conversation) => {
+        const otherUserId = conversation.participants.find(
+          (id) => id !== userId,
+        );
+
+        let otherUser = null;
+
+        if (otherUserId) {
+          try {
+            const user = await client.users.getUser(otherUserId);
+
+            const name =
+              `${user.firstName || ""} ${user.lastName || ""}`.trim() ||
+              user.username ||
+              "User";
+
+            otherUser = {
+              id: user.id,
+              name,
+            };
+          } catch (error) {
+            console.error(`Failed to fetch Clerk user ${otherUserId}:`, error);
+          }
+        }
+
+        return {
+          ...conversation,
+          otherUser,
+        };
+      }),
+    );
+
+    return NextResponse.json(conversationsWithUsers);
   } catch (error) {
     console.error("Error fetching conversations:", error);
 
