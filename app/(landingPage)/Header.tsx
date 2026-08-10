@@ -38,7 +38,7 @@ export const Header = () => {
             <Link href="/" className="hover:underline decoration-wavy">
               requests
             </Link>
-            <Link href="/" className="hover:underline decoration-wavy">
+            <Link href="/books/messages" className="hover:underline decoration-wavy">
               messages
             </Link>
             <Link
