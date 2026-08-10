@@ -1,4 +1,18 @@
-export const Hero = () => {
+import BookCoverMarquee from "@/components/home/BookCoverMarquee";
+import Stats from "@/components/stats/Stats";
+
+type HeroBook = {
+  _id: string;
+  title: string;
+  imageUrl: string;
+};
+
+type HeroProps = {
+  books: HeroBook[];
+};
+
+
+export const Hero = ({ books }: HeroProps) => {
   return (
     <section className="overflow-hidden py-10 md:py-20">
       <div className="mx-auto flex w-full max-w-7xl flex-col-reverse items-center justify-between gap-12 px-6 lg:flex-row lg:px-8">
@@ -13,10 +27,13 @@ export const Hero = () => {
             </span>
             <p>with ease</p>
           </div>
+          <div className="mt-10">
+            <Stats />
+          </div>
         </div>
         <div>
-            {/* TODO: ADD A VIDEO SHOWING ALL THE BOOKS HERE LATER OKHAY */}
-            
+          {/* <BookCoverMarquee books={books} /> */}
+          {/* TODO: ADD A VIDEO SHOWING ALL THE BOOKS HERE LATER OKHAY */}
         </div>
       </div>
     </section>
