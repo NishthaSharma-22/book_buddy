@@ -4,6 +4,7 @@ import { getPastelColor } from "@/lib/utils";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import BackToBrowse from "@/components/browse/BackToBrowse";
+import RequestBookButton from "@/components/books/RequestBookButton";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -17,6 +18,29 @@ export default async function IndividualBookPage({ params }: Props) {
   if (!Book) {
     notFound();
   }
+  const handleRequestBook = async () => {
+    try {
+      const response = await fetch("/api/conversations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          bookId: book._id,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to request book");
+      }
+
+      window.location.href = `/books/messages/${data.conversationId}`;
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-10">
@@ -71,13 +95,7 @@ export default async function IndividualBookPage({ params }: Props) {
               <p className="mt-2 leading-7 text-gray-600">{book.description}</p>
             </div>
           )}
-          {/* Request button */}
-          <button
-            type="button"
-            className="mt-8 w-full bgwhite-6 py-4 font-medium bg-dark-lilac text-white transition hover:bg-gray-800 hover:cursor-pointer"
-          >
-            Request this book
-          </button>
+          <RequestBookButton bookId={book._id.toString()} />
         </div>
       </div>
     </main>
