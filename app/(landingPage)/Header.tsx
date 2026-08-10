@@ -91,9 +91,6 @@ export const Header = () => {
               >
                 my books
               </Link>
-              <Link href="/" className="hover:underline decoration-wavy">
-                requests
-              </Link>
               <div className="relative">
                 <Link
                   href="/books/messages"
