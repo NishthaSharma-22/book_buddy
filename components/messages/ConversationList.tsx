@@ -49,14 +49,13 @@ export default function ConversationList({
   }, []);
 
   return (
-    <div className="flex h-full w-full min-h-0 flex-col border-r border-gray-200 bg-white md:w-80">
+    <div className="flex h-full w-4/5 min-h-0 flex-col border-r border-gray-200 bg-white md:w-80">
       <div className="border-b border-gray-200 px-5 py-4">
         <h2 className="text-lg font-semibold text-gray-900">Messages</h2>
 
         <p className="mt-1 text-sm text-dark-lilac">Your conversations</p>
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto">
-
         {conversations.length === 0 ? (
           <div className="px-5 py-10 text-center text-sm text-gray-500">
             No conversations yet.

@@ -12,6 +12,7 @@ type Book = {
   description: string;
   exchangeType: string;
   imageUrl?: string;
+  status?: string;
 };
 
 type BookCardProps = {
@@ -19,34 +20,59 @@ type BookCardProps = {
 };
 
 export function BookCard({ book }: BookCardProps) {
+  const isAvailable = book.status === "available";
+
+  const statusLabel =
+    book.status === "given-away"
+      ? "Given away"
+      : book.status === "sold"
+        ? "Sold"
+        : book.status === "lent"
+          ? "Currently lent"
+          : book.status === "archived"
+            ? "Unavailable"
+            : null;
+
   return (
-    <Link href={`/books/${book._id}`} className="overflow-hidden border-dashed border-black border-2 bg-white transition hover:-translate-y-1 hover:cursor-pointer">
-      <div className="flex h-56 items-center justify-center bg-gray-100">
-        {book.imageUrl ? (
+    <Link
+      href={`/books/${book._id}`}
+      className={`overflow-hidden border-dashed border-black border-2 bg-white transition ${
+        isAvailable
+          ? "hover:-translate-y-1 hover:cursor-pointer"
+          : "opacity-60 grayscale"
+      }`}
+    >
+      {/* Book image */}
+      {book.imageUrl ? (
+        <div className="relative h-56 w-full">
           <img
             src={book.imageUrl}
             alt={book.title}
-            className="h-56 w-full object-cover"
+            className="h-full w-full object-cover"
           />
-        ) : (
-          <div
-            className={`flex h-56 w-full items-center justify-center ${getPastelColor(
-              book._id,
-            )}`}
-          >
-            <span className="text-5xl">📚</span>
-          </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div
+          className={`flex h-56 w-full items-center justify-center ${getPastelColor(
+            book._id,
+          )}`}
+        >
+          <span className="text-5xl">📚</span>
+        </div>
+      )}
 
       {/* Book information */}
       <div className="p-5">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <h2 className="font-semibold text-gray-900">{book.title}</h2>
+            <h2 className="font-semibold text-gray-900">
+              {book.title}
+            </h2>
 
             {book.author && (
-              <p className="mt-1 text-sm text-gray-500">{book.author}</p>
+              <p className="mt-1 text-sm text-gray-500">
+                {book.author}
+              </p>
             )}
           </div>
 
@@ -54,6 +80,15 @@ export function BookCard({ book }: BookCardProps) {
             {book.exchangeType}
           </span>
         </div>
+
+        {/* Status */}
+        {statusLabel && (
+          <div className="mt-3">
+            <span className="rounded-full bg-gray-200 px-3 py-1 text-xs font-medium text-gray-600">
+              {statusLabel}
+            </span>
+          </div>
+        )}
 
         <div className="mt-4 flex flex-wrap gap-2">
           <span className="rounded-md bg-gray-50 px-2 py-1 text-xs text-gray-600">
@@ -70,7 +105,9 @@ export function BookCard({ book }: BookCardProps) {
         </div>
 
         {book.edition && (
-          <p className="mt-3 text-xs text-gray-500">Edition: {book.edition}</p>
+          <p className="mt-3 text-xs text-gray-500">
+            Edition: {book.edition}
+          </p>
         )}
       </div>
     </Link>

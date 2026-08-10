@@ -13,34 +13,32 @@ export default function MessagesPage({
   conversationId,
 }: MessagesPageProps) {
   return (
-    <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
-      <div className="flex h-full min-h-0">
-        {/* Conversation history */}
-        <div
-          className={`h-full min-h-0 shrink-0 ${
-            conversationId ? "hidden md:block" : "block"
-          }`}
-        >
-          <ConversationList currentUserId={currentUserId} />
-        </div>
+    <div className="flex h-full min-h-0 w-full min-w-0 overflow-hidden md:w-full lg:w-[1200px] lg:min-w-[1200px] lg:max-w-[1200px]">
+      {/* Conversation history */}
+      <div
+        className={`h-full min-h-0 w-full shrink-0 border-r border-gray-200 md:w-80 md:min-w-80 lg:w-80 lg:min-w-80 ${
+          conversationId ? "hidden md:block" : "block"
+        }`}
+      >
+        <ConversationList />
+      </div>
 
-        {/* Chat */}
-        <div
-          className={`h-full min-h-0 min-w-0 flex-1 ${
-            conversationId ? "block" : "hidden md:flex"
-          }`}
-        >
-          {conversationId ? (
-            <ChatWindow
-              conversationId={conversationId}
-              currentUserId={currentUserId}
-            />
-          ) : (
-            <div className="flex h-full flex-1 items-center justify-center text-sm text-gray-500">
-              Select a conversation to start chatting.
-            </div>
-          )}
-        </div>
+      {/* Chat */}
+      <div
+        className={`h-full min-h-0 min-w-0 overflow-hidden md:flex-1 lg:w-[880px] lg:min-w-[880px] lg:max-w-[880px] lg:flex-none ${
+          conversationId ? "block" : "hidden md:flex"
+        }`}
+      >
+        {conversationId ? (
+          <ChatWindow
+            conversationId={conversationId}
+            currentUserId={currentUserId}
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center text-sm text-gray-500">
+            <p>Select a conversation to start chatting</p>
+          </div>
+        )}
       </div>
     </div>
   );
