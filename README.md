@@ -1,3 +1,97 @@
+<div>
+  <img width="100" height="100" alt="bb-logo" src="https://github.com/user-attachments/assets/cc502d0e-174b-41d8-b86e-4c6ec0fbf957" /> 
+<h1>book_buddy</h1>
+
+</div>
+reuse books. save money. reduce waste.
+
+## OurPlanet.Rocks
+book buddy was built for **ourplanet.rocks**, with **sdg 12** at its core<br /><br /><br />
+
+
+
+it started with one student getting a used textbook from another student. now, i'm trying to make that simple idea easier to scale.
+
+**book buddy** is a platform where students can **give away, swap, lend, and find used textbooks** instead of buying new ones every year. <br /><br /><br />
+<img width="1893" height="943" alt="Screenshot 2026-08-10 230925" src="https://github.com/user-attachments/assets/c60c0e71-e849-49c1-a7b1-7da49a141a91" />
+
+the idea came from my own experience. in high school, my mom suggested i get my books from a friend who was two grades ahead of me. i realized many students already did this through friends and word of mouth.
+
+so i thought: what if finding a used book was as easy as finding a new one?
+
+and that's how book buddy started.
+
+## why book buddy?
+
+book buddy is built around **sdg 12 — responsible consumption and production**.
+
+textbooks are often used for just one year, even though they can still be useful for years.
+
+instead of:
+
+buy → use → store → repeat
+
+book buddy encourages:
+
+use → share → reuse → pass it on
+
+the goal is simple: make reusing books easier and reduce unnecessary waste.
+
+## what can you do?
+
+students can:
+
+* list books they no longer need
+* swap, lend, or give books away
+* find books they need
+* chat with other students
+* manage their listings
+* track the status of their books
+
+instead of asking "who do i know who has this book?"
+
+you can ask "who has this book?"
+
+## tech stack
+
+* next.js
+* react + typescript
+* tailwind css
+* mongodb + mongoose
+* clerk for authentication
+* socket.io for real-time chat
+* cloudinary for images
+* vercel for deployment
+
+## testing
+
+i built the prototype and tested the idea with five friends to see if it could replace the usual "ask a friend" way of finding used books.
+
+the basic flow is:
+
+**find a book → view it → request it → chat → reuse**
+
+## what's next?
+
+the current version is a prototype. eventually, i'd like to expand it from individual students to **school and city-wide book-sharing networks**.
+
+some ideas include:
+
+* school communities
+* verified students
+* book availability notifications
+* school libraries and book banks
+* tracking books reused and resources saved
+* expanding across chandigarh and other cities
+
+the long-term goal is simple:
+
+**make reusing a book easier than buying a new one.**
+
+**share what you have. get what you need. reuse what already exists.**
+
+
+
 # to-dos:
 
 1. smart book matching
