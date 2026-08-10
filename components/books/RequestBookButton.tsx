@@ -7,7 +7,9 @@ type RequestBookButtonProps = {
   bookId: string;
 };
 
-export default function RequestBookButton({ bookId }: RequestBookButtonProps) {
+export default function RequestBookButton({
+  bookId,
+}: RequestBookButtonProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -28,13 +30,20 @@ export default function RequestBookButton({ bookId }: RequestBookButtonProps) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to create conversation");
+        throw new Error(
+          data.error || "Failed to create conversation",
+        );
       }
 
       router.push(`/books/messages/${data.conversationId}`);
     } catch (error) {
-      console.error(error);
-      alert("You cannot request your own book!");
+      console.error("Request book error:", error);
+
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("Failed to request this book.");
+      }
     } finally {
       setLoading(false);
     }
@@ -45,7 +54,7 @@ export default function RequestBookButton({ bookId }: RequestBookButtonProps) {
       type="button"
       onClick={handleRequestBook}
       disabled={loading}
-      className="rounded-xl bg-black px-6 py-3 font-medium text-white hover:cursor-pointer hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+      className="rounded-xl bg-black px-5 py-3 text-sm font-medium text-white disabled:opacity-50"
     >
       {loading ? "Opening chat..." : "Request this book"}
     </button>

@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { Book } from "@/lib/models/Book";
 import { Conversation } from "@/lib/models/Conversation";
+import { Notification } from "@/lib/models/Notification";
 
 export async function POST(req: Request) {
   try {
@@ -53,14 +54,32 @@ export async function POST(req: Request) {
       });
     }
 
+    // Create notification for the book owner
+    const notification = await Notification.create({
+      userId: book.ownerId,
+      senderId: userId,
+      type: "book_request",
+      message: `Someone requested your book "${book.title}"`,
+      conversationId: conversation._id,
+      bookId: book._id,
+    });
+
+    (globalThis as any).io
+      ?.to(`user:${book.ownerId}`)
+      .emit("new-notification", notification);
     return NextResponse.json({
       conversationId: conversation._id.toString(),
     });
   } catch (error) {
-    console.error("Error creating conversation:", error);
+    console.error("CREATE CONVERSATION ERROR:", error);
 
     return NextResponse.json(
-      { error: "Failed to create conversation" },
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Unknown error creating conversation",
+      },
       { status: 500 },
     );
   }

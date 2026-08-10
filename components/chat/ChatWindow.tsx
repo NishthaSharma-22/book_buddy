@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
+import { useUser } from "@clerk/nextjs";
 
 type Message = {
   _id?: string;
@@ -20,6 +21,7 @@ export default function ChatWindow({
   conversationId,
   currentUserId,
 }: ChatWindowProps) {
+  const { user } = useUser();
   const [messages, setMessages] = useState<Message[]>([]);
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(true);
@@ -60,6 +62,9 @@ export default function ChatWindow({
 
     // Join the conversation
     socket.emit("join-conversation", conversationId);
+    if (user?.id) {
+      socket.emit("join-user", user.id);
+    }
 
     // Listen for real-time messages
     socket.on("new-message", (message: Message) => {
@@ -81,7 +86,7 @@ export default function ChatWindow({
       socket.disconnect();
       socketRef.current = null;
     };
-  }, [conversationId]);
+  }, [conversationId, user?.id]);
 
   const sendMessage = () => {
     const trimmedText = text.trim();
