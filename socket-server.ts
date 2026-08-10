@@ -10,11 +10,10 @@ const httpServer = createServer();
 
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.FRONTEND_URL,
+    origin: ["http://localhost:3000", "https://book-buddy-mu.vercel.app"],
     methods: ["GET", "POST"],
   },
 });
-
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 
@@ -30,7 +29,9 @@ io.on("connection", (socket) => {
     console.log(`Socket ${socket.id} joined user ${userId}`);
   });
 
-  socket.on("send-message", async (message) => {
+socket.on("send-message", async (message) => {
+  console.log("📨 SEND-MESSAGE RECEIVED:", message);
+
     try {
       const { connectDB } = await import("./lib/mongodb");
       const { Message } = await import("./lib/models/Message");

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -37,36 +36,27 @@ export default function ChatWindow({
   const [messages, setMessages] = useState<Message[]>([]);
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(true);
-  const [conversation, setConversation] =
-    useState<Conversation | null>(null);
+  const [conversation, setConversation] = useState<Conversation | null>(null);
 
   const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
-    const socket = io();
-
+    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL);
     socketRef.current = socket;
 
     const loadConversation = async () => {
       try {
-        const response = await fetch(
-          `/api/conversations/${conversationId}`,
-        );
+        const response = await fetch(`/api/conversations/${conversationId}`);
 
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(
-            data.error || "Failed to load conversation",
-          );
+          throw new Error(data.error || "Failed to load conversation");
         }
 
         setConversation(data);
       } catch (error) {
-        console.error(
-          "Failed to load conversation:",
-          error,
-        );
+        console.error("Failed to load conversation:", error);
       }
     };
 
@@ -75,24 +65,17 @@ export default function ChatWindow({
       try {
         setLoading(true);
 
-        const response = await fetch(
-          `/api/messages/${conversationId}`,
-        );
+        const response = await fetch(`/api/messages/${conversationId}`);
 
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(
-            data.error || "Failed to load messages",
-          );
+          throw new Error(data.error || "Failed to load messages");
         }
 
         setMessages(data);
       } catch (error) {
-        console.error(
-          "Failed to load messages:",
-          error,
-        );
+        console.error("Failed to load messages:", error);
       } finally {
         setLoading(false);
       }
@@ -101,33 +84,24 @@ export default function ChatWindow({
     loadConversation();
     loadMessages();
 
-    socket.emit(
-      "join-conversation",
-      conversationId,
-    );
+    socket.emit("join-conversation", conversationId);
 
     if (user?.id) {
       socket.emit("join-user", user.id);
     }
 
-    socket.on(
-      "new-message",
-      (message: Message) => {
-        setMessages((prev) => {
-          if (
-            message._id &&
-            prev.some(
-              (existing) =>
-                existing._id === message._id,
-            )
-          ) {
-            return prev;
-          }
+    socket.on("new-message", (message: Message) => {
+      setMessages((prev) => {
+        if (
+          message._id &&
+          prev.some((existing) => existing._id === message._id)
+        ) {
+          return prev;
+        }
 
-          return [...prev, message];
-        });
-      },
-    );
+        return [...prev, message];
+      });
+    });
 
     return () => {
       socket.disconnect();

@@ -43,8 +43,7 @@ export const Header = () => {
     loadNotifications();
 
     // Listen for new notifications
-    const socket = io();
-
+const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL);
     socket.emit("join-user", user.id);
 
     socket.on("new-notification", () => {
