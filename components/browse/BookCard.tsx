@@ -38,44 +38,44 @@ export function BookCard({ book }: BookCardProps) {
   return (
     <Link
       href={`/books/${book._id}`}
-      className={`overflow-hidden border-dashed border-black border-2 bg-white transition ${
+      className={`overflow-hidden border-2 border-dashed border-black bg-white transition ${
         isAvailable
           ? "hover:-translate-y-1 hover:cursor-pointer"
           : "opacity-60 grayscale"
       }`}
     >
-      <div className="relative">
-        {/* Added date */}
-        <div className="absolute right-3 top-3 z-10 rounded-full bg-transparent border-1 border-black px-3 py-1 text-[12px] font-medium">
-          Added{" "}
-          {new Date(book.createdAt).toLocaleDateString("en-IN", {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
-          })}
-        </div>
-
+      {/* Book image */}
+      <div className="relative aspect-[4/5] w-full overflow-hidden">
         {book.imageUrl ? (
           <Image
             src={book.imageUrl}
             alt={book.title}
-            width={500}
-            height={400}
-            className="h-56 w-full object-cover"
+            fill
+            className="object-cover"
           />
         ) : (
           <div
-            className={`flex h-56 w-full items-center justify-center ${getPastelColor(
+            className={`flex h-full w-full items-center justify-center ${getPastelColor(
               book._id,
             )}`}
           >
             📚
           </div>
         )}
+
+        {/* Added date */}
+        <span className="absolute right-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-gray-600 shadow-sm">
+          Added{" "}
+          {new Date(book.createdAt).toLocaleDateString("en-IN", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          })}
+        </span>
       </div>
 
       {/* Book information */}
-      <div className="p-5">
+      <div className="pr-3 pl-3 pt-3">
         <div className="flex items-start justify-between gap-3">
           <div>
             <h2 className="font-semibold text-gray-900">{book.title}</h2>
@@ -87,7 +87,9 @@ export function BookCard({ book }: BookCardProps) {
 
           <span
             className={`rounded-full px-3 py-1 text-xs font-medium capitalize ${
-              book.exchangeType.toLowerCase() === "donate" ? "bg-light-lilac" : "bg-dark-yellow"
+              book.exchangeType.toLowerCase() === "donate"
+                ? "bg-light-lilac"
+                : "bg-dark-yellow"
             }`}
           >
             {book.exchangeType}
@@ -118,7 +120,9 @@ export function BookCard({ book }: BookCardProps) {
         </div>
 
         {book.edition && (
-          <p className="mt-3 text-xs text-gray-500">Edition: {book.edition}</p>
+          <p className="mt-3 text-xs text-gray-500">
+            Edition: {book.edition}
+          </p>
         )}
       </div>
     </Link>

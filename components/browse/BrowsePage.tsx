@@ -1,6 +1,7 @@
 import { connectDB } from "@/lib/mongodb";
 import { Book } from "@/lib/models/Book";
 import { BrowseBooks } from "./BrowseBooks";
+import Stats from "../stats/Stats";
 
 async function getBooks() {
   await connectDB();
@@ -42,13 +43,17 @@ export default async function BrowsePage() {
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-10">
-      <div>
-        <h1 className="text-3xl font-semibold">browse books</h1>
+      <div className="flex justify-between">
+        <div>
+          <h1 className="text-3xl font-semibold">browse books</h1>
 
-        <p className="mt-2 mb-5 text-gray-500">
-          find books from students in your community
-        </p>
+          <p className="mt-2 mb-5 text-gray-500">
+            find books from students in your community
+          </p>
+        </div>
+        <Stats />
       </div>
+
       <BrowseBooks books={books} />
     </main>
   );

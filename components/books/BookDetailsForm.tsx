@@ -1,5 +1,7 @@
 "use client";
 
+import { UploadSimpleIcon } from "@phosphor-icons/react";
+
 type BookDetailsFormProps = {
   formData: {
     title: string;
@@ -11,25 +13,18 @@ type BookDetailsFormProps = {
     condition: string;
     description: string; 
     imageUrl: string;
+    imageFile: File | null;
   };
 
-  updateField: (field: string, value: string) => void;
+  updateField: (field: string, value: string | File) => void;
 }
 
 export function BookDetailsForm({formData, updateField}: BookDetailsFormProps) {
   return (
     <section className="mt-6 rounded-2xl border border-gray-200 bg-white p-6">
-      <div>
-        <h2 className="text-lg font-semibold">Book details</h2>
-
-        <p className="mt-1 text-sm text-gray-500">
-          Add the details of the book you want to share
-        </p>
-      </div>
-
-      <div className="mt-6 grid gap-5 sm:grid-cols-2">
+      <div className="grid gap-5 sm:grid-cols-2">
         {/* Title */}
-        <div className="sm:col-span-2">
+        <div>
           <label htmlFor="title" className="text-sm font-medium text-gray-700">
             Book title
           </label>
@@ -41,9 +36,41 @@ export function BookDetailsForm({formData, updateField}: BookDetailsFormProps) {
             value={formData.title}
             onChange={(e) => updateField("title", e.target.value)}
             placeholder="e.g. NCERT Physics"
-            className="mt-2 w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-gray-400 hover:cursor-pointer"
+            className="mt-2 w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-gray-400"
+            required
           />
         </div>
+
+        {/* Book Image upload */}
+        <div className="mt-6">
+          <input
+            id="book-image"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+
+              if (file) {
+                updateField("imageFile", file);
+              }
+            }}
+            className="hidden"
+          />
+
+          <label
+            htmlFor="book-image"
+            className="inline-flex mt-2 w-full rounded-lg border border-gray-200 bg-gray-200 px-4 py-1 text-sm outline-none transition focus:border-gray-400 hover:cursor-pointer"
+          >
+            <div className="flex items-center gap-4">
+              <UploadSimpleIcon size={20} />
+              <div className="flex flex-col">
+                Choose book cover photo
+                <span className="text-xs text-gray-400">JPG, PNG, or WEBP</span>
+              </div>
+            </div>
+          </label>
+        </div>
+
         {/* Author */}
         <div>
           <label htmlFor="author" className="text-sm font-medium text-gray-700">
@@ -57,7 +84,7 @@ export function BookDetailsForm({formData, updateField}: BookDetailsFormProps) {
             value={formData.author}
             onChange={(e) => updateField("author", e.target.value)}
             placeholder="e.g. H.C. Verma"
-            className="mt-2 w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-gray-400 hover:cursor-pointer"
+            className="mt-2 w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-gray-400"
           />
         </div>
         {/* ISBN */}
@@ -73,7 +100,7 @@ export function BookDetailsForm({formData, updateField}: BookDetailsFormProps) {
             value={formData.isbn}
             onChange={(e) => updateField("isbn", e.target.value)}
             placeholder="e.g. 978-8174504944"
-            className="mt-2 w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-gray-400 hover:cursor-pointer"
+            className="mt-2 w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-gray-400"
           />
         </div>
         {/* Subject */}
@@ -91,6 +118,7 @@ export function BookDetailsForm({formData, updateField}: BookDetailsFormProps) {
             value={formData.subject}
             onChange={(e) => updateField("subject", e.target.value)}
             className="mt-2 w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm outline-none focus:border-gray-400 hover:cursor-pointer"
+            required
           >
             <option value="" disabled>
               Select subject
@@ -100,15 +128,13 @@ export function BookDetailsForm({formData, updateField}: BookDetailsFormProps) {
             <option value="physics">Physics</option>
             <option value="chemistry">Chemistry</option>
             <option value="biology">Biology</option>
-            <option value="computer-science">Computer Science</option>
+            <option value="comp-sci">Computer Science</option>
             <option value="english">English</option>
 
             <option value="other">+ Add a subject</option>
           </select>
         </div>
 
-
-        
         {/* Class / Year */}
         <div>
           <label htmlFor="grade" className="text-sm font-medium text-gray-700">
@@ -121,12 +147,18 @@ export function BookDetailsForm({formData, updateField}: BookDetailsFormProps) {
             value={formData.grade}
             onChange={(e) => updateField("grade", e.target.value)}
             className="mt-2 w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm outline-none focus:border-gray-400 hover:cursor-pointer"
+            required
           >
             <option value="" disabled>
               Select class / year
             </option>
 
             <optgroup label="School">
+              <option value="class-1">Class 1</option>
+              <option value="class-2">Class 2</option>
+              <option value="class-3">Class 3</option>
+              <option value="class-4">Class 4</option>
+              <option value="class-5">Class 5</option>
               <option value="class-6">Class 6</option>
               <option value="class-7">Class 7</option>
               <option value="class-8">Class 8</option>
@@ -160,7 +192,7 @@ export function BookDetailsForm({formData, updateField}: BookDetailsFormProps) {
             value={formData.edition}
             onChange={(e) => updateField("edition", e.target.value)}
             placeholder="e.g. 5th Edition"
-            className="mt-2 w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-gray-400 hover:cursor-pointer"
+            className="mt-2 w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-gray-400"
           />
         </div>
         {/* Condition */}
@@ -178,6 +210,7 @@ export function BookDetailsForm({formData, updateField}: BookDetailsFormProps) {
             value={formData.condition}
             onChange={(e) => updateField("condition", e.target.value)}
             className="mt-2 w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-gray-400 hover:cursor-pointer"
+            required
           >
             <option value="" disabled>
               Select condition
@@ -190,6 +223,7 @@ export function BookDetailsForm({formData, updateField}: BookDetailsFormProps) {
             <option value="well-used">Well Used</option>
           </select>
         </div>
+
         {/* Description */}
         <div className="sm:col-span-2">
           <label
@@ -204,9 +238,9 @@ export function BookDetailsForm({formData, updateField}: BookDetailsFormProps) {
             name="description"
             value={formData.description}
             onChange={(e) => updateField("description", e.target.value)}
-            rows={4}
+            rows={2}
             placeholder="Add anything another student should know about this book..."
-            className="mt-2 w-full resize-none rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-gray-400 hover:cursor-pointer"
+            className="mt-2 w-full resize-none rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-gray-400"
           />
         </div>
       </div>

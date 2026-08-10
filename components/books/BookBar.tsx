@@ -141,7 +141,7 @@ const BookBar = ({
                   <option value="physics">Physics</option>
                   <option value="chemistry">Chemistry</option>
                   <option value="biology">Biology</option>
-                  <option value="computer-science">Computer Science</option>
+                  <option value="comp-sci">Computer Science</option>
                   <option value="english">English</option>
                   <option value="other">Other</option>
                 </select>

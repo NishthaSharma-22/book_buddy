@@ -41,7 +41,7 @@ export function ExchangeTypeSelector({
   ];
 
   return (
-    <section className="mt-6 border rounded-2xl border-gray-200 p-6">
+    <section className="mt-6 border rounded-2xl border-gray-200 p-6 bg-white">
       <h2 className="text-lg font-semibold">how do you want to share it?</h2>
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
         {options.map((option) => (
