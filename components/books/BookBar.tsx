@@ -118,9 +118,9 @@ const BookBar = ({
               <button
                 type="button"
                 onClick={() => setShowFilters(false)}
-                className="rounded-lg p-1 hover:bg-gray-100"
+                className="rounded-lg p-1 bg-red-300 hover:bg-red-700 hover:text-white"
               >
-                <BiX size={22} />
+                <BiX size={30} />
               </button>
             </div>
 
@@ -134,7 +134,7 @@ const BookBar = ({
                 <select
                   value={subject}
                   onChange={(e) => handleSubjectChange(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-black"
+                  className="w-full rounded-lg border border-gray-300 hover:cursor-pointer bg-white px-3 py-2.5 text-sm outline-none focus:border-black"
                 >
                   <option value="">All Subjects</option>
                   <option value="mathematics">Mathematics</option>
@@ -156,7 +156,7 @@ const BookBar = ({
                 <select
                   value={grade}
                   onChange={(e) => handleGradeChange(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-black"
+                  className="w-full rounded-lg border border-gray-300 hover:cursor-pointer bg-white px-3 py-2.5 text-sm outline-none focus:border-black"
                 >
                   <option value="">All Classes / Years</option>
 
@@ -188,7 +188,7 @@ const BookBar = ({
                 <select
                   value={condition}
                   onChange={(e) => handleConditionChange(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-black"
+                  className="w-full rounded-lg border border-gray-300 hover:cursor-pointer bg-white px-3 py-2.5 text-sm outline-none focus:border-black"
                 >
                   <option value="">Any Condition</option>
                   <option value="new">New</option>
@@ -208,7 +208,7 @@ const BookBar = ({
                 <select
                   value={exchangeType}
                   onChange={(e) => handleExchangeTypeChange(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-black"
+                  className="w-full rounded-lg border border-gray-300 hover:cursor-pointer bg-white px-3 py-2.5 text-sm outline-none focus:border-black"
                 >
                   <option value="">Any Type</option>
                   <option value="donate">Donate</option>
@@ -224,7 +224,7 @@ const BookBar = ({
               <button
                 type="button"
                 onClick={clearFilters}
-                className="mt-5 w-full rounded-lg border border-gray-300 py-2.5 text-sm font-medium hover:bg-gray-50"
+                className="mt-5 w-full rounded-lg border border-gray-300 hover:cursor-pointer py-2.5 text-sm font-medium hover:bg-gray-50"
               >
                 Clear filters
               </button>

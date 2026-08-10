@@ -1,4 +1,5 @@
 import { capitalize, getPastelColor } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
 
 type Book = {
@@ -13,6 +14,7 @@ type Book = {
   exchangeType: string;
   imageUrl?: string;
   status?: string;
+  createdAt: string;
 };
 
 type BookCardProps = {
@@ -42,41 +44,52 @@ export function BookCard({ book }: BookCardProps) {
           : "opacity-60 grayscale"
       }`}
     >
-      {/* Book image */}
-      {book.imageUrl ? (
-        <div className="relative h-56 w-full">
-          <img
+      <div className="relative">
+        {/* Added date */}
+        <div className="absolute right-3 top-3 z-10 rounded-full bg-transparent border-1 border-black px-3 py-1 text-[12px] font-medium">
+          Added{" "}
+          {new Date(book.createdAt).toLocaleDateString("en-IN", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          })}
+        </div>
+
+        {book.imageUrl ? (
+          <Image
             src={book.imageUrl}
             alt={book.title}
-            className="h-full w-full object-cover"
+            width={500}
+            height={400}
+            className="h-56 w-full object-cover"
           />
-        </div>
-      ) : (
-        <div
-          className={`flex h-56 w-full items-center justify-center ${getPastelColor(
-            book._id,
-          )}`}
-        >
-          <span className="text-5xl">📚</span>
-        </div>
-      )}
+        ) : (
+          <div
+            className={`flex h-56 w-full items-center justify-center ${getPastelColor(
+              book._id,
+            )}`}
+          >
+            📚
+          </div>
+        )}
+      </div>
 
       {/* Book information */}
       <div className="p-5">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <h2 className="font-semibold text-gray-900">
-              {book.title}
-            </h2>
+            <h2 className="font-semibold text-gray-900">{book.title}</h2>
 
             {book.author && (
-              <p className="mt-1 text-sm text-gray-500">
-                {book.author}
-              </p>
+              <p className="mt-1 text-sm text-gray-500">{book.author}</p>
             )}
           </div>
 
-          <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium capitalize">
+          <span
+            className={`rounded-full px-3 py-1 text-xs font-medium capitalize ${
+              book.exchangeType.toLowerCase() === "donate" ? "bg-light-lilac" : "bg-dark-yellow"
+            }`}
+          >
             {book.exchangeType}
           </span>
         </div>
@@ -84,7 +97,7 @@ export function BookCard({ book }: BookCardProps) {
         {/* Status */}
         {statusLabel && (
           <div className="mt-3">
-            <span className="rounded-full bg-gray-200 px-3 py-1 text-xs font-medium text-gray-600">
+            <span className="rounded-full bg-dark-purple px-3 py-1 text-xs font-medium text-white">
               {statusLabel}
             </span>
           </div>
@@ -105,9 +118,7 @@ export function BookCard({ book }: BookCardProps) {
         </div>
 
         {book.edition && (
-          <p className="mt-3 text-xs text-gray-500">
-            Edition: {book.edition}
-          </p>
+          <p className="mt-3 text-xs text-gray-500">Edition: {book.edition}</p>
         )}
       </div>
     </Link>

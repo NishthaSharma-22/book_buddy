@@ -16,6 +16,7 @@ type Book = {
   exchangeType: string;
   imageUrl?: string;
   status?: string;
+  createdAt: string;
 };
 
 type BrowseBooksProps = {

@@ -5,7 +5,34 @@ import { BrowseBooks } from "./BrowseBooks";
 async function getBooks() {
   await connectDB();
 
-  const books = await Book.find().sort({ createdAt: -1 }).lean();
+  const books = await Book.aggregate([
+    {
+      $addFields: {
+        statusOrder: {
+          $switch: {
+            branches: [
+              {
+                case: { $eq: ["$status", "available"] },
+                then: 0,
+              },
+            ],
+            default: 1,
+          },
+        },
+      },
+    },
+    {
+      $sort: {
+        statusOrder: 1,
+        createdAt: -1,
+      },
+    },
+    {
+      $project: {
+        statusOrder: 0,
+      },
+    },
+  ]);
 
   return JSON.parse(JSON.stringify(books));
 }
