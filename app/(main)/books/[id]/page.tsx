@@ -35,9 +35,11 @@ export default async function IndividualBookPage({
       <div className="mt-6 grid gap-8 md:grid-cols-2">
         {/* Book image */}
         <div
-          className={`flex min-h-[450px] items-center justify-center rounded-2xl ${getPastelColor(
-            book._id.toString(),
-          )}`}
+          className={`flex min-h-[450px] items-center justify-center rounded-2xl ${
+            !book.imageUrl
+              ? getPastelColor(book._id.toString())
+              : "bg-transparent"
+          }`}
         >
           {book.imageUrl ? (
             <Image
