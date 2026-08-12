@@ -65,7 +65,7 @@ export const Header = () => {
 
         <nav className="hidden md:flex items-center gap-8">
           <Show when="signed-out">
-            <Link href="/" className="hover:underline decoration-wavy">
+            <Link href="/books" className="hover:underline decoration-wavy">
               browse
             </Link>
             <Link href="/" className="hover:underline decoration-wavy">

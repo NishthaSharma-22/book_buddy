@@ -11,29 +11,34 @@ type HeroProps = {
   books: HeroBook[];
 };
 
-
 export const Hero = ({ books }: HeroProps) => {
   return (
     <section className="overflow-hidden py-10 md:py-20">
-      <div className="mx-auto flex w-full max-w-7xl flex-col-reverse items-center justify-between gap-12 px-6 lg:flex-row lg:px-8">
-        <div className="flex flex-col gap-5 text-center lg:text-left">
-          <h1 className="text-light-lilac [-webkit-text-stroke:2px_var(--color-gray-600)] font-black  text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
-            book_buddy
-          </h1>
-          <div className="flex flex-col gap-3">
-            <p className="sm:text-5xl md:text-6xl lg:text-7xl">share and get</p>
-            <span className="bg-light-yellow mx-auto w-fit h-full p-1 rounded-xl -rotate-3 lg:mx-0 border-dashed border-black border-2 sm:text-5xl md:text-6xl lg:text-7xl">
-              books
-            </span>
-            <p className="sm:text-5xl md:text-6xl lg:text-7xl">with ease</p>
+      <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-16 px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+        <div className="flex w-full max-w-xl flex-col gap-5 text-center lg:w-[40%] lg:text-left">
+          <div>
+            <h1 className="text-light-lilac [-webkit-text-stroke:2px_var(--color-gray-600)] font-black  text-4xl sm:text-4xl md:text-5xl lg:text-7xl">
+              book_buddy
+            </h1>
+            <div className="flex flex-col gap-3">
+              <p className="sm:text-3xl md:text-4xl lg:text-5xl">
+                share and get
+              </p>
+              <span className="bg-light-yellow mx-auto w-fit h-full p-1 rounded-xl -rotate-3 lg:mx-0 border-dashed border-black border-2 sm:text-3xl md:text-4xl lg:text-5xl">
+                books
+              </span>
+              <p className="sm:text-3xl md:text-4xl lg:text-5xl">with ease</p>
+            </div>
           </div>
           <div className="mt-10">
             <Stats />
           </div>
         </div>
-        <div>
-          {/* <BookCoverMarquee books={books} /> */}
-          {/* TODO: ADD A VIDEO SHOWING ALL THE BOOKS HERE LATER OKHAY */}
+        <div className="w-full lg:w-[60%]">
+          <video autoPlay muted loop playsInline className="w-full rounded-sm">
+            <source src="/videos/book_buddy.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </div>
       </div>
     </section>

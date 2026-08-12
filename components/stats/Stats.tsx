@@ -12,15 +12,21 @@ export default async function Stats() {
   ]);
 
   return (
-    <div className="grid grid-cols-2 mt-5 sm:text-4xl md:text-5xl lg:text-6xl">
-      <h2 className="grid p-2">
-        <p className="font-semibold">{totalBooks}</p>
-        <p className="text-gray-500">Books</p>
-      </h2>
+    <div className="mt-6 flex w-fit items-center justify-center gap-8 sm:gap-10 md:gap-12">
+      <div className="grid p-2 text-center lg:text-left">
+        <p className="text-3xl font-semibold sm:text-4xl md:text-5xl">
+          {totalBooks}+
+        </p>
+        <p className="text-base text-gray-500 sm:text-lg md:text-xl">Books</p>
+      </div>
 
-      <div className="grid p-2">
-        <p className="font-semibold">{totalStudents}</p>
-        <p className="text-gray-500">Active Students</p>
+      <div className="grid p-2 text-center lg:text-left">
+        <p className="text-3xl font-semibold sm:text-4xl md:text-5xl">
+          {totalStudents}
+        </p>
+        <p className="text-base text-gray-500 sm:text-lg md:text-xl">
+          Students
+        </p>
       </div>
     </div>
   );
