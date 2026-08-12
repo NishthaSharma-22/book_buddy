@@ -113,6 +113,14 @@ export const Header = () => {
           <Show when="signed-in">
             <UserButton />
           </Show>
+          <div className="flex items-center gap-3">
+            <SignUpButton>
+              <button className="rounded-full bg-[#d6d0ff] px-1 py-2 text-xs font-medium hover:opacity-90">
+                get started
+              </button>
+            </SignUpButton>
+          </div>
+
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

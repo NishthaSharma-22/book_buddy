@@ -20,12 +20,12 @@ export const Hero = ({ books }: HeroProps) => {
           <h1 className="text-light-lilac [-webkit-text-stroke:2px_var(--color-gray-600)] font-black  text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
             book_buddy
           </h1>
-          <div className="flex flex-col gap-3 text-5xl sm:text-4xl md:text-5xl">
-            <p>share and get</p>
-            <span className="bg-light-yellow mx-auto w-fit h-full p-1 rounded-xl -rotate-3 lg:mx-0 border-dashed border-black border-2">
+          <div className="flex flex-col gap-3">
+            <p className="sm:text-5xl md:text-6xl lg:text-7xl">share and get</p>
+            <span className="bg-light-yellow mx-auto w-fit h-full p-1 rounded-xl -rotate-3 lg:mx-0 border-dashed border-black border-2 sm:text-5xl md:text-6xl lg:text-7xl">
               books
             </span>
-            <p>with ease</p>
+            <p className="sm:text-5xl md:text-6xl lg:text-7xl">with ease</p>
           </div>
           <div className="mt-10">
             <Stats />

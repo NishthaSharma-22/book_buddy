@@ -12,14 +12,14 @@ export default async function Stats() {
   ]);
 
   return (
-    <div className="flex items-center gap-5 text-4xl mt-5">
-      <h2 className="flex items-center gap-2 p-2">
-        <p className="font-semibold text-5xl">{totalBooks}</p>
+    <div className="grid grid-cols-2 mt-5 sm:text-4xl md:text-5xl lg:text-6xl">
+      <h2 className="grid p-2">
+        <p className="font-semibold">{totalBooks}</p>
         <p className="text-gray-500">Books</p>
       </h2>
 
-      <div className="flex items-center gap-2 p-2">
-        <p className="font-semibold text-5xl">{totalStudents}</p>
+      <div className="grid p-2">
+        <p className="font-semibold">{totalStudents}</p>
         <p className="text-gray-500">Active Students</p>
       </div>
     </div>
