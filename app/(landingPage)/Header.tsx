@@ -68,7 +68,7 @@ export const Header = () => {
             <Link href="/books" className="hover:underline decoration-wavy">
               browse
             </Link>
-            <Link href="/" className="hover:underline decoration-wavy">
+            <Link href="/how-it-works" className="hover:underline decoration-wavy">
               how it works
             </Link>
             <div className="flex items-center gap-3">
@@ -137,7 +137,7 @@ export const Header = () => {
             <Show when="signed-out">
               <Link href="/">browse</Link>
 
-              <Link href="/">how it works</Link>
+              <Link href="/how-it-works">how it works</Link>
 
               <SignUpButton>
                 <button className="w-full rounded-full bg-[#d6d0ff] px-4 py-2 text-sm font-medium">
