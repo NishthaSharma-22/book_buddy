@@ -34,11 +34,13 @@ export const Hero = ({ books }: HeroProps) => {
           <div className="mt-6 sm:mx-auto md:mx-auto">
             <Stats />
           </div>
-          <SignUpButton>
-            <button className="w-fit rounded-xl text-xl border-b-5  border-black bg-dark-lilac text-white py-2 px-2 font-medium mt-4 hover:bg-light-yellow hover:text-black sm:mx-auto">
-              Sign up to get started
-            </button>
-          </SignUpButton>
+          <div className="sm:mx-auto">
+            <SignUpButton>
+              <button className="w-fit rounded-xl text-xl border-b-5  border-black bg-dark-lilac text-white py-2 px-2 font-medium md:mt-4 lg:mt-4 sm:mt-2 hover:bg-light-yellow hover:text-black">
+                Sign up to get started
+              </button>
+            </SignUpButton>
+          </div>
         </div>
         <div className="w-full lg:w-[60%]">
           <video

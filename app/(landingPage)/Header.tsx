@@ -127,7 +127,7 @@ export const Header = () => {
           {/* Signed Out → Get Started */}
           <Show when="signed-out">
             <SignUpButton>
-              <button className="rounded-full bg-[#d6d0ff] px-3 py-2 text-xs font-medium hover:opacity-90">
+              <button className="rounded-full bg-[#d6d0ff] px-1 py-2 text-xs font-medium hover:opacity-90">
                 get started
               </button>
             </SignUpButton>
