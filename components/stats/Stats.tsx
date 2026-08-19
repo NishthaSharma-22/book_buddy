@@ -12,7 +12,7 @@ export default async function Stats() {
   ]);
 
   return (
-    <div className="mt-6 flex w-fit items-center justify-center gap-8 sm:gap-10 md:gap-12 sm:mx-auto">
+    <div className="flex w-fit items-center justify-center gap-8 sm:gap-10 md:gap-12 mx-auto md:mx-0">
       <div className="grid p-2 text-center lg:text-left">
         <p className="text-3xl font-semibold sm:text-3xl md:text-5xl">
           {totalBooks}+

@@ -31,7 +31,7 @@ export const Hero = ({ books }: HeroProps) => {
               <p className="sm:text-3xl md:text-4xl lg:text-5xl">with ease</p>
             </div>
           </div>
-          <div className="mt-6 sm:mx-auto md:mx-auto">
+          <div className="mt-6">
             <Stats />
           </div>
           <div className="sm:mx-auto">
