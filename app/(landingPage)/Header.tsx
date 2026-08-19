@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Show,
-  SignInButton,
-  SignUpButton,
-  UserButton,
-  useUser,
-} from "@clerk/nextjs";
+import { Show, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
 
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
@@ -23,6 +17,7 @@ export const Header = () => {
 
   useEffect(() => {
     if (!user?.id) return;
+
     const loadNotifications = async () => {
       try {
         const response = await fetch("/api/notifications");
@@ -57,39 +52,49 @@ export const Header = () => {
 
   return (
     <header className="w-full px-4 sm:px-6">
-      <div className="max-w-6xl mx-auto mt-5 flex h-16 items-center justify-between rounded-xl border-black border-2 border-b-8 bg-white px-4 sm:px-6">
-        <Link href="/" className="flex gap-1 items-center justify-center">
+      <div className="mx-auto mt-5 flex h-16 max-w-6xl items-center justify-between rounded-xl border-2 border-black border-b-8 bg-white px-4 sm:px-6">
+        {/* Logo */}
+        <Link href="/" className="flex items-center justify-center gap-1">
           <Image src="/bb-logo.png" alt="book_buddy" width={40} height={40} />
           <h1 className="text-lg font-bold">book_buddy</h1>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8">
+        {/* Desktop Navigation */}
+        <nav className="hidden items-center gap-8 md:flex">
+          {/* Signed Out */}
           <Show when="signed-out">
-            <Link href="/books" className="hover:underline decoration-wavy">
+            <Link href="/books" className="decoration-wavy hover:underline">
               browse
             </Link>
-            <Link href="/how-it-works" className="hover:underline decoration-wavy">
+
+            <Link
+              href="/how-it-works"
+              className="decoration-wavy hover:underline"
+            >
               how it works
             </Link>
-            <div className="flex items-center gap-3">
-              <SignUpButton>
-                <button className="rounded-full bg-[#d6d0ff] px-4 py-2 text-sm font-medium hover:opacity-90">
-                  get started
-                </button>
-              </SignUpButton>
-            </div>
+
+            <SignUpButton>
+              <button className="rounded-full bg-[#d6d0ff] px-4 py-2 text-sm font-medium hover:opacity-90">
+                get started
+              </button>
+            </SignUpButton>
           </Show>
+
+          {/* Signed In */}
           <Show when="signed-in">
-            <Link href="/books" className="hover:underline decoration-wavy">
+            <Link href="/books" className="decoration-wavy hover:underline">
               browse
             </Link>
-            <Link href="/my-books" className="hover:underline decoration-wavy">
+
+            <Link href="/my-books" className="decoration-wavy hover:underline">
               my books
             </Link>
+
             <div className="relative">
               <Link
                 href="/books/messages"
-                className="hover:underline decoration-wavy"
+                className="decoration-wavy hover:underline"
               >
                 messages
               </Link>
@@ -100,52 +105,75 @@ export const Header = () => {
                 </span>
               )}
             </div>
+
             <Link
               href="/books/add"
-              className="bg-light-lilac rounded-xl p-2 hover:bg-light-yellow decoration-wavy"
+              className="rounded-xl bg-light-lilac p-2 decoration-wavy hover:bg-light-yellow"
             >
               add a book!
             </Link>
+
             <UserButton />
           </Show>
         </nav>
+
+        {/* Mobile Header Controls */}
         <div className="flex items-center gap-3 md:hidden">
+          {/* Signed In → User Avatar */}
           <Show when="signed-in">
             <UserButton />
           </Show>
-          <div className="flex items-center gap-3">
+
+          {/* Signed Out → Get Started */}
+          <Show when="signed-out">
             <SignUpButton>
-              <button className="rounded-full bg-[#d6d0ff] px-1 py-2 text-xs font-medium hover:opacity-90">
+              <button className="rounded-full bg-[#d6d0ff] px-3 py-2 text-xs font-medium hover:opacity-90">
                 get started
               </button>
             </SignUpButton>
-          </div>
+          </Show>
 
+          {/* Mobile Menu Button */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-black text-xl"
-            aria-label="Toggle NavBar"
+            aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <CgClose /> : <IoMdMenu />}
           </button>
         </div>
       </div>
+
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="mx-auto mt-2 max-w-6xl rounded-xl border-2 border-black border-b-8 bg-white p-4 md:hidden">
           <nav className="flex flex-col gap-4">
+            {/* Signed Out */}
             <Show when="signed-out">
-              <Link href="/">browse</Link>
+              <Link href="/books" onClick={() => setMobileMenuOpen(false)}>
+                browse
+              </Link>
 
-              <Link href="/how-it-works">how it works</Link>
+              <Link
+                href="/how-it-works"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                how it works
+              </Link>
 
               <SignUpButton>
-                <button className="w-full rounded-full bg-[#d6d0ff] px-4 py-2 text-sm font-medium">
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full rounded-full bg-[#d6d0ff] px-4 py-2 text-sm font-medium"
+                >
                   get started
                 </button>
               </SignUpButton>
             </Show>
 
+            {/* Signed In */}
             <Show when="signed-in">
               <Link href="/books" onClick={() => setMobileMenuOpen(false)}>
                 browse
