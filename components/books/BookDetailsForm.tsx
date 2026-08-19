@@ -1,6 +1,6 @@
 "use client";
 
-import { UploadSimpleIcon } from "@phosphor-icons/react";
+import { CameraIcon, UploadSimpleIcon } from "@phosphor-icons/react";
 
 type BookDetailsFormProps = {
   formData: {
@@ -41,36 +41,6 @@ export function BookDetailsForm({formData, updateField}: BookDetailsFormProps) {
           />
         </div>
 
-        {/* Book Image upload */}
-        <div className="mt-6">
-          <input
-            id="book-image"
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-
-              if (file) {
-                updateField("imageFile", file);
-              }
-            }}
-            className="hidden"
-          />
-
-          <label
-            htmlFor="book-image"
-            className="inline-flex mt-2 w-full rounded-lg border border-gray-200 bg-gray-200 px-4 py-1 text-sm outline-none transition focus:border-gray-400 hover:cursor-pointer"
-          >
-            <div className="flex items-center gap-4">
-              <UploadSimpleIcon size={20} />
-              <div className="flex flex-col">
-                Choose book cover photo
-                <span className="text-xs text-gray-400">JPG, PNG, or WEBP</span>
-              </div>
-            </div>
-          </label>
-        </div>
-
         {/* Author */}
         <div>
           <label htmlFor="author" className="text-sm font-medium text-gray-700">
@@ -90,7 +60,7 @@ export function BookDetailsForm({formData, updateField}: BookDetailsFormProps) {
         {/* ISBN */}
         <div>
           <label htmlFor="isbn" className="text-sm font-medium text-gray-700">
-            ISBN
+            ISBN <span className="text-sm text-gray-600">(Optional)</span>
           </label>
 
           <input
@@ -242,6 +212,73 @@ export function BookDetailsForm({formData, updateField}: BookDetailsFormProps) {
             placeholder="Add anything another student should know about this book..."
             className="mt-2 w-full resize-none rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-gray-400"
           />
+        </div>
+
+        {/* Book Image upload */}
+        <div className="sm:col-span-2">
+          {/* Choose from device */}
+          <input
+            id="book-image"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+
+              if (file) {
+                updateField("imageFile", file);
+              }
+            }}
+            className="hidden"
+          />
+
+          {/* Take photo with camera */}
+          <input
+            id="book-camera"
+            type="file"
+            accept="image/*"
+            capture="environment"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+
+              if (file) {
+                updateField("imageFile", file);
+              }
+            }}
+            className="hidden"
+          />
+
+          <div className="flex gap-2">
+            {/* Camera */}
+            <label
+              htmlFor="book-camera"
+              className="inline-flex w-full items-center rounded-lg border-black bg-light-yellow px-4 py-3 text-sm font-medium transition hover:cursor-pointer hover:bg-yellow-100"
+            >
+              <div className="flex items-center gap-3">
+                <CameraIcon size={22} weight="bold" />
+
+                <div className="flex flex-col">
+                  <span>Take a photo of book</span>
+                </div>
+              </div>
+            </label>
+
+            {/* Upload */}
+            <label
+              htmlFor="book-image"
+              className="inline-flex w-full items-center rounded-lg border border-gray-200 bg-gray-100 px-4 py-3 text-sm font-medium transition hover:cursor-pointer hover:bg-gray-200"
+            >
+              <div className="flex items-center gap-3">
+                <UploadSimpleIcon size={22} />
+
+                <div className="flex flex-col">
+                  <span>Choose from device</span>
+                  <span className="text-xs font-normal text-gray-400">
+                    JPG, PNG, or WEBP
+                  </span>
+                </div>
+              </div>
+            </label>
+          </div>
         </div>
       </div>
     </section>
