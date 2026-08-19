@@ -125,13 +125,13 @@ export const Header = () => {
           </Show>
 
           {/* Signed Out → Get Started */}
-          <Show when="signed-out">
+          {/* <Show when="signed-out">
             <SignUpButton>
               <button className="rounded-full bg-[#d6d0ff] px-1 py-2 text-xs font-medium hover:opacity-90">
                 get started
               </button>
             </SignUpButton>
-          </Show>
+          </Show> */}
 
           {/* Mobile Menu Button */}
           <button
