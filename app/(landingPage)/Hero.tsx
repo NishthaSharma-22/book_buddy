@@ -1,5 +1,6 @@
 import BookCoverMarquee from "@/components/home/BookCoverMarquee";
 import Stats from "@/components/stats/Stats";
+import { SignUpButton } from "@clerk/nextjs";
 
 type HeroBook = {
   _id: string;
@@ -30,12 +31,23 @@ export const Hero = ({ books }: HeroProps) => {
               <p className="sm:text-3xl md:text-4xl lg:text-5xl">with ease</p>
             </div>
           </div>
-          <div className="mt-10">
+          <div className="mt-6 sm:mx-auto md:mx-auto">
             <Stats />
           </div>
+          <SignUpButton>
+            <button className="w-fit rounded-xl text-xl border-b-5  border-black bg-dark-lilac text-white py-2 px-2 font-medium mt-4 hover:bg-light-yellow hover:text-black sm:mx-auto">
+              Sign up to get started
+            </button>
+          </SignUpButton>
         </div>
         <div className="w-full lg:w-[60%]">
-          <video autoPlay muted loop playsInline className="w-full rounded-sm">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full rounded-sm select-none"
+          >
             <source src="/videos/book_buddy.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
