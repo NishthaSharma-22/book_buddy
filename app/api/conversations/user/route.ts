@@ -25,9 +25,10 @@ export async function GET() {
 
     const conversationsWithUsers = await Promise.all(
       conversations.map(async (conversation) => {
-const otherUserId = conversation.participants.find(
-  (id: string) => id !== userId,
-);
+        const otherUserId = conversation.participants.find(
+          (id: string) => id !== userId,
+        );
+
         let otherUser = null;
 
         if (otherUserId) {
@@ -45,6 +46,10 @@ const otherUserId = conversation.participants.find(
             };
           } catch (error) {
             console.error(`Failed to fetch Clerk user ${otherUserId}:`, error);
+            otherUser = {
+              id: otherUserId,
+              name: "User",
+            };
           }
         }
 
@@ -57,10 +62,15 @@ const otherUserId = conversation.participants.find(
 
     return NextResponse.json(conversationsWithUsers);
   } catch (error) {
-    console.error("Error fetching conversations:", error);
+    console.error("ERROR IN /api/conversations/user:", error);
 
     return NextResponse.json(
-      { error: "Failed to fetch conversations" },
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to fetch conversations",
+      },
       { status: 500 },
     );
   }
