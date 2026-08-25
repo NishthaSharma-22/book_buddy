@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import BookBar from "../books/BookBar";
 import { BookCard } from "./BookCard";
 
@@ -20,48 +20,96 @@ type Book = {
 };
 
 type BrowseBooksProps = {
-  books: Book[];
+  initialBooks: Book[];
+  initialHasMore: boolean;
 };
 
-export function BrowseBooks({ books }: BrowseBooksProps) {
-  const [searchQuery, setSearchQuery] = useState("");
+const LIMIT = 12;
+
+export function BrowseBooks({
+  initialBooks,
+  initialHasMore,
+}: BrowseBooksProps) {
+  const [books, setBooks] = useState(initialBooks);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(initialHasMore);
+  const [isLoading, setIsLoading] = useState(false);
+  const [search, setSearch] = useState("");
   const [subject, setSubject] = useState("");
   const [grade, setGrade] = useState("");
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const isFirstRender = useRef(true);
 
-  const filteredBooks = books.filter((book) => {
-    const query = searchQuery.toLowerCase().trim();
+  const fetchBooks = useCallback(
+    async (
+      pageNum: number,
+      searchVal: string,
+      subjectVal: string,
+      gradeVal: string,
+      replace: boolean,
+    ) => {
+      setIsLoading(true);
+      try {
+        const params = new URLSearchParams({
+          page: String(pageNum),
+          limit: String(LIMIT),
+        });
+        if (searchVal) params.set("search", searchVal);
+        if (subjectVal) params.set("subject", subjectVal);
+        if (gradeVal) params.set("grade", gradeVal);
 
-    // Search filter
-    const matchesSearch =
-      !query ||
-      book.title.toLowerCase().includes(query) ||
-      book.author?.toLowerCase().includes(query) ||
-      book.subject.toLowerCase().includes(query) ||
-      book.grade.toLowerCase().includes(query) ||
-      book.description.toLowerCase().includes(query);
+        const res = await fetch(`/api/books?${params}`);
+        const data = await res.json();
 
-    // Subject filter
-    const matchesSubject =
-      !subject ||
-      book.subject.toLowerCase() === subject.toLowerCase();
+        setBooks((prev) => (replace ? data.books : [...prev, ...data.books]));
+        setHasMore(data.hasMore);
+        setPage(pageNum);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [],
+  );
 
-    // Grade filter
-    const matchesGrade =
-      !grade ||
-      book.grade.toLowerCase() === grade.toLowerCase();
+  // Refetch from page 1 when filters change (debounced for search)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    const timer = setTimeout(() => {
+      fetchBooks(1, search, subject, grade, true);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [search, subject, grade, fetchBooks]);
 
-    return matchesSearch && matchesSubject && matchesGrade;
-  });
+  // Infinite scroll
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !isLoading) {
+          fetchBooks(page + 1, search, subject, grade, false);
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [hasMore, isLoading, page, search, subject, grade, fetchBooks]);
 
   return (
     <>
       <BookBar
-        onSearch={setSearchQuery}
+        onSearch={setSearch}
         onSubjectChange={setSubject}
         onGradeChange={setGrade}
       />
 
-      {filteredBooks.length === 0 ? (
+      {books.length === 0 && !isLoading ? (
         <div className="mt-10 rounded-2xl border border-dashed border-gray-300 p-12 text-center">
           <p className="text-gray-500">
             No books match your search or filters.
@@ -69,10 +117,24 @@ export function BrowseBooks({ books }: BrowseBooksProps) {
         </div>
       ) : (
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filteredBooks.map((book) => (
+          {books.map((book) => (
             <BookCard key={book._id} book={book} />
           ))}
         </div>
+      )}
+
+      <div ref={sentinelRef} className="h-10 mt-4" />
+
+      {isLoading && (
+        <p className="mt-4 text-center text-sm text-gray-500">
+          Loading more books...
+        </p>
+      )}
+
+      {!hasMore && books.length > 0 && (
+        <p className="mt-6 text-center text-sm text-gray-400">
+          You've seen all the books
+        </p>
       )}
     </>
   );
