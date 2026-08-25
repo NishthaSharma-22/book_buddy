@@ -9,14 +9,13 @@ import BackToBrowse from "@/components/browse/BackToBrowse";
 import RequestBookButton from "@/components/books/RequestBookButton";
 import BookStatusControl from "@/components/books/BookStatusControl";
 import BookOwnerControls from "@/components/edit/BookOwnerControls";
+import SimilarBooks from "@/components/books/SimilarBooks";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
-export default async function IndividualBookPage({
-  params,
-}: Props) {
+export default async function IndividualBookPage({ params }: Props) {
   const { id } = await params;
 
   await connectDB();
@@ -24,6 +23,20 @@ export default async function IndividualBookPage({
   const { userId } = await auth();
 
   const book = await Book.findById(id).lean();
+
+  const similarBooks = await Book.find({
+    _id: { $ne: book._id },
+    subject: book.subject,
+    grade: book.grade,
+    status: "unavailable",
+  })
+    .limit(4)
+    .select(
+      "_id title author imageUrl subject grade condition exchangeType status createdAt",
+    )
+    .lean();
+
+  const serializedSimilar = JSON.parse(JSON.stringify(similarBooks));
 
   if (!book) {
     notFound();
@@ -36,7 +49,7 @@ export default async function IndividualBookPage({
       <div className="mt-6 grid gap-8 md:grid-cols-2">
         {/* Book image */}
         <div
-          className={`flex min-h-[450px] items-center justify-center rounded-2xl ${
+          className={`flex min-h-112.5 items-center justify-center rounded-2xl ${
             !book.imageUrl
               ? getPastelColor(book._id.toString())
               : "bg-transparent"
@@ -48,7 +61,7 @@ export default async function IndividualBookPage({
               alt={book.title}
               width={400}
               height={500}
-              className="max-h-[450px] w-auto rounded-xl object-contain"
+              className="min-h-112.5 w-auto rounded-xl object-contain"
             />
           ) : (
             <span className="text-7xl">📚</span>
@@ -124,6 +137,11 @@ export default async function IndividualBookPage({
           )}
         </div>
       </div>
+      {
+        serializedSimilar.length >0 && (
+          <SimilarBooks books={serializedSimilar} />
+        )
+      }
     </main>
   );
 }
