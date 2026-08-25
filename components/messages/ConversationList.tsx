@@ -22,10 +22,11 @@ type Conversation = {
 
 type ConversationListProps = {
   currentUserId: string;
+  onSelect?: () => void;
 };
 
 export default function ConversationList({
-  currentUserId,
+  currentUserId, onSelect
 }: ConversationListProps) {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const router = useRouter();
@@ -56,7 +57,8 @@ export default function ConversationList({
   }, []);
 
   return (
-    <div className="flex h-full w-4/5 min-h-0 flex-col border-r border-gray-200 bg-white md:w-80">
+    <div className="flex h-full w-full min-h-0 flex-col bg-white">
+      {" "}
       <div className="border-b border-gray-200 px-5 py-4">
         <h2 className="text-lg font-semibold text-gray-900">Messages</h2>
 
@@ -81,9 +83,10 @@ export default function ConversationList({
               <button
                 key={conversation._id}
                 type="button"
-                onClick={() =>
-                  router.push(`/books/messages/${conversation._id}`)
-                }
+                onClick={() => {
+                  router.push(`/books/messages/${conversation._id}`);
+                  onSelect?.();
+                }}
                 className={`w-full border-b border-gray-100 px-5 py-4 text-left transition hover:bg-gray-50 ${
                   isSelected ? "bg-gray-50" : "bg-white"
                 }`}
@@ -96,7 +99,7 @@ export default function ConversationList({
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between gap-3">
                       <div className="flex flex-col">
-                        <p className="truncate text-sm font-semibold text-gray-900">
+                        <p className="line-clamp-2 text-sm font-semibold text-gray-900">
                           {conversation.bookId?.title || "Book conversation"}
                         </p>
 
