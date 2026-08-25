@@ -3,14 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start",
-  "socket": "tsx socket-server.ts"
-},
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "socket": "tsx socket-server.ts"
+  },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
     "@clerk/nextjs": "^7.7.1",
+    "@clerk/testing": "^2.2.30",
     "@phosphor-icons/react": "^2.1.10",
     "@twilio/conversations": "^3.0.0",
     "class-variance-authority": "^0.7.1",
@@ -30,6 +31,7 @@
     "twilio": "^6.0.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
