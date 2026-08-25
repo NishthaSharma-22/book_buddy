@@ -71,7 +71,7 @@ export async function POST(req: Request) {
       conversationId: conversation._id.toString(),
     });
   } catch (error) {
-    console.error("CREATE CONVERSATION ERROR:", error);
+    console.error("Error creating conversation:", error);
 
     return NextResponse.json(
       {

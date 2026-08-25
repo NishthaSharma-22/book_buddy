@@ -15,23 +15,15 @@ const io = new Server(httpServer, {
   },
 });
 io.on("connection", (socket) => {
-  console.log("User connected:", socket.id);
-
   socket.on("join-conversation", (conversationId) => {
     socket.join(`conversation:${conversationId}`);
-
-    console.log(`Socket ${socket.id} joined conversation ${conversationId}`);
   });
 
   socket.on("join-user", (userId) => {
     socket.join(`user:${userId}`);
-
-    console.log(`Socket ${socket.id} joined user ${userId}`);
   });
 
 socket.on("send-message", async (message) => {
-  console.log("📨 SEND-MESSAGE RECEIVED:", message);
-
     try {
       const { connectDB } = await import("./lib/mongodb");
       const { Message } = await import("./lib/models/Message");

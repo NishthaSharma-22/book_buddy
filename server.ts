@@ -32,23 +32,13 @@ app.prepare().then(async () => {
   (globalThis as any).io = io;
 
   io.on("connection", (socket) => {
-    console.log("User connected:", socket.id);
-
-    // Join a conversation room
     socket.on("join-conversation", (conversationId) => {
       socket.join(`conversation:${conversationId}`);
-
-      console.log(`Socket ${socket.id} joined conversation ${conversationId}`);
     });
 
-    // Join the user's personal notification room
     socket.on("join-user", (userId) => {
       socket.join(`user:${userId}`);
-
-      console.log(`Socket ${socket.id} joined user ${userId}`);
     });
-
-    // Send a message
     socket.on("send-message", async (message) => {
       try {
         await connectDB();

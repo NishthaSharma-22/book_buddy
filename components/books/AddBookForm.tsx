@@ -107,8 +107,6 @@ const handleSubmit = async (e: React.FormEvent) => {
       imageUrl: "",
       imageFile: null,
     });
-
-    console.log("Created book:", data.book);
   } catch (error) {
     console.error(error);
 
