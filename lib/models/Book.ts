@@ -84,4 +84,16 @@ const BookSchema = new Schema(
   },
 );
 
+
+BookSchema.index({ ownerId: 1 });
+
+BookSchema.index({ status: 1, createdAt: -1 });
+
+BookSchema.index({ subject: 1, grade: 1, status: 1 });
+
+BookSchema.index(
+  { title: "text", author: "text", description: "text" },
+  { weights: { title: 3, author: 2, description: 1 } },
+);
+
 export const Book = models.Book || mongoose.model("Book", BookSchema);

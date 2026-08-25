@@ -71,14 +71,10 @@ export async function GET(request: Request) {
 
     const matchStage: Record<string, unknown> = {};
 
-    if (search) {
-      matchStage.$or = [
-        { title: { $regex: search, $options: "i" } },
-        { author: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" } },
-        { subject: { $regex: search, $options: "i" } },
-      ];
-    }
+   if (search) {
+     matchStage.$text = { $search: search };
+   }
+   
     if (subject) matchStage.subject = subject;
     if (grade) matchStage.grade = grade;
 
