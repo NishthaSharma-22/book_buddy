@@ -15,6 +15,8 @@
     "@clerk/testing": "^2.2.30",
     "@phosphor-icons/react": "^2.1.10",
     "@twilio/conversations": "^3.0.0",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.2",
     "class-variance-authority": "^0.7.1",
     "cloudinary": "^2.10.0",
     "clsx": "^2.1.1",

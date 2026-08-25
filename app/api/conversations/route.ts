@@ -2,9 +2,9 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 import { connectDB } from "@/lib/mongodb";
-import { Book } from "@/lib/models/Book";
 import { Conversation } from "@/lib/models/Conversation";
 import { Notification } from "@/lib/models/Notification";
+import { ratelimit } from "@/lib/rateLimit";
 
 export async function POST(req: Request) {
   try {
@@ -12,6 +12,14 @@ export async function POST(req: Request) {
 
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { success } = await ratelimit.limit(userId);
+    if (!success) {
+      return NextResponse.json(
+        { error: "Too many requests. Please slow down." },
+        { status: 429 },
+      );
     }
 
     const { bookId } = await req.json();

@@ -1,4 +1,8 @@
 import mongoose from "mongoose";
+import "@/lib/models/Book";
+import "@/lib/models/Conversation";
+import "@/lib/models/Message";
+import "@/lib/models/Notification";
 
 function getMongoDBUri(): string {
   const uri = process.env.MONGODB_URI;

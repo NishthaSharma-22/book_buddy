@@ -1,8 +1,24 @@
 import { NextResponse } from "next/server";
 import cloudinary from "@/lib/cloudinary";
+import { ratelimit } from "@/lib/rateLimit";
+import { auth } from "@clerk/nextjs/server";
 
 export async function POST(req: Request) {
   try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { success } = await ratelimit.limit(userId);
+    if (!success) {
+      return NextResponse.json(
+        { error: "Too many requests. Please slow down." },
+        { status: 429 },
+      );
+    }
+
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
 
