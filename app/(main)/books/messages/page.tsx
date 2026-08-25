@@ -1,17 +1,7 @@
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
-import MessagesPage from "@/components/messages/MessagesPage";
-
-export default async function Messages() {
-  const { userId } = await auth();
-
-  if (!userId) {
-    redirect("/sign-in");
-  }
-
+export default function MessagesPage() {
   return (
-    <main className="mx-auto max-w-7xl px-4 py-6">
-      <MessagesPage currentUserId={userId} />
-    </main>
+    <div className="flex h-full w-full items-center justify-center text-sm text-gray-500">
+      <p>Select a conversation to start chatting</p>
+    </div>
   );
 }
