@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-
+import { Book } from "@/lib/models/Book";
 import { connectDB } from "@/lib/mongodb";
 import { Conversation } from "@/lib/models/Conversation";
 import { Notification } from "@/lib/models/Notification";
