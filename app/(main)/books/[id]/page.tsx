@@ -17,12 +17,18 @@ type Props = {
 
 export default async function IndividualBookPage({ params }: Props) {
   const { id } = await params;
+  const book = await Book.findById(id).lean();
 
   await connectDB();
 
   const { userId } = await auth();
 
-  const book = await Book.findById(id).lean();
+  let hasUploadedBook = false;
+  if (userId && userId !== book?.ownerId) {
+    const uploadedCount = await Book.countDocuments({ ownerId: userId });
+    hasUploadedBook = uploadedCount > 0;
+  }
+
 
   const similarBooks = await Book.find({
     _id: { $ne: book._id },
@@ -132,16 +138,15 @@ export default async function IndividualBookPage({ params }: Props) {
               <RequestBookButton
                 bookId={book._id.toString()}
                 status={book.status}
+                hasUploadedBook={hasUploadedBook}
               />
             </div>
           )}
         </div>
       </div>
-      {
-        serializedSimilar.length >0 && (
-          <SimilarBooks books={serializedSimilar} />
-        )
-      }
+      {serializedSimilar.length > 0 && (
+        <SimilarBooks books={serializedSimilar} />
+      )}
     </main>
   );
 }
