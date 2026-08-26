@@ -3,8 +3,8 @@ import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Analytics } from '@vercel/analytics/next';
-
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -43,6 +43,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <ClerkProvider>
           {children}
           <Analytics />
+          <SpeedInsights />
         </ClerkProvider>
       </body>
     </html>
