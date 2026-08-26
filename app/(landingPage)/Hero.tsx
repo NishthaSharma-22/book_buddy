@@ -34,6 +34,12 @@ export const Hero = ({ books }: HeroProps) => {
           <div className="mt-6">
             <Stats />
           </div>
+          <div className="mt-4 text-sm sm:text-base">
+            <p className="font-bold text-lg">Give a book. Get a book.</p>
+            <p className="mt-1 text-gray-600">
+              Find a book you want → upload a book you want to give away → exchange/donate or lend.
+            </p>
+          </div>
           <div className="sm:mx-auto">
             <SignUpButton>
               <button className="w-fit rounded-xl text-xl border-b-5  border-black bg-dark-lilac text-white py-2 px-2 font-medium md:mt-4 lg:mt-4 sm:mt-2 hover:bg-light-yellow hover:text-black">

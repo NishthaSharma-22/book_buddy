@@ -106,6 +106,12 @@ export const Header = () => {
               )}
             </div>
 
+            <Link href="https://forms.gle/WiATfn2s51ta75d2A">
+              <span className="bg-light-yellow p-1 rounded-sm border-2 border-gray-300">
+                FEEDBACK
+              </span>
+            </Link>
+
             <Link
               href="/books/add"
               className="rounded-xl bg-light-lilac p-2 decoration-wavy hover:bg-light-yellow"
@@ -194,6 +200,12 @@ export const Header = () => {
                     {unreadCount}
                   </span>
                 )}
+              </Link>
+
+              <Link href="https://forms.gle/WiATfn2s51ta75d2A">
+                <span className="bg-light-yellow p-1 rounded-sm border-2 border-gray-300">
+                  FEEDBACK
+                </span>
               </Link>
 
               <Link
