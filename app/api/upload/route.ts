@@ -19,7 +19,16 @@ export async function POST(req: Request) {
       );
     }
 
-    const formData = await req.formData();
+    let formData: FormData;
+    try {
+      formData = await req.formData();
+    } catch {
+      return NextResponse.json(
+        { error: "Image is too large. Please use a smaller photo." },
+        { status: 413 },
+      );
+    }
+
     const file = formData.get("file") as File | null;
 
     if (!file) {
